@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  
+  <title>Interest Calculator</title>
+</head>
+<body style="font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; background: linear-gradient(135deg, #fdfcfb, #e2d1c3); display: flex; flex-direction: row; justify-content: center; align-items: flex-start; gap: 40px;">
+
+  <div style="background: #ffffff; padding: 30px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); width: 320px;">
+    <h2 style="margin-bottom: 20px; color: #333;">📋 Enter Details</h2>
+
+    <div style="margin-bottom: 15px;">
+      <label for="accountNumber" style="font-weight: bold; display: block; margin-bottom: 5px;">Account Number:</label>
+      <input type="text" id="accountNumber" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;">
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <label for="amount" style="font-weight: bold; display: block; margin-bottom: 5px;">Amount:</label>
+      <input type="number" id="amount" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;">
+    </div>
+
+    <div style="margin-bottom: 20px;">
+      <label for="interestRate" style="font-weight: bold; display: block; margin-bottom: 5px;">Interest Rate (%):</label>
+      <input type="number" id="interestRate" step="0.01" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;">
+    </div>
+
+    <button onclick="calculateInterest()" style="width: 100%; padding: 12px; background-color: #4CAF50; color: white; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s;">
+      ➕ Add to Table
+    </button>
+  </div>
+
+  <div style="flex: 1; background: #ffffff; padding: 30px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.1);">
+    <h2 style="color: #333;">📊 Interest Table</h2>
+    <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+      <thead>
+        <tr style="background-color: #4CAF50; color: white;">
+          <th style="padding: 12px; border: 1px solid #ccc;">Account Number</th>
+          <th style="padding: 12px; border: 1px solid #ccc;">Amount</th>
+          <th style="padding: 12px; border: 1px solid #ccc;">With Interest</th>
+        </tr>
+      </thead>
+      <tbody id="outputTableBody">
+ 
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    function calculateInterest() {
+      const accNo = document.getElementById('accountNumber').value.trim();
+      const amount = parseFloat(document.getElementById('amount').value);
+      const rate = parseFloat(document.getElementById('interestRate').value);
+
+      if (!accNo || isNaN(amount) || isNaN(rate)) {
+        alert("⚠️ Please enter valid input values.");
+        return;
+      }
+
+      const interestAmount = amount + (amount * rate / 100);
+      const tableBody = document.getElementById('outputTableBody');
+      const row = document.createElement('tr');
+
+      row.innerHTML = `
+        <td style="padding: 10px; border: 1px solid #ccc;">${accNo}</td>
+        <td style="padding: 10px; border: 1px solid #ccc;">₹${amount.toFixed(2)}</td>
+        <td style="padding: 10px; border: 1px solid #ccc;">₹${interestAmount.toFixed(2)}</td>
+      `;
+
+      tableBody.appendChild(row);
+
+     
+      document.getElementById('accountNumber').value = '';
+      document.getElementById('amount').value = '';
+      document.getElementById('interestRate').value = '';
+    }
+  </script>
+
+</body>
+</html>

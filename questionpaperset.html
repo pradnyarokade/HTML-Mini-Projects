@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Modern Question Paper Designer</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 40px;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: linear-gradient(to right, #fdfbfb, #ebedee);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: #ffffff;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 34px;
+      color: #2c3e50;
+      margin-bottom: 30px;
+      border-bottom: 2px solid #dcdde1;
+      padding-bottom: 15px;
+    }
+
+    .form-group {
+      margin-bottom: 30px;
+    }
+
+    .form-label {
+      font-size: 18px;
+      color: #34495e;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 120px;
+      padding: 14px;
+      border-radius: 10px;
+      border: 2px solid #dfe6e9;
+      font-size: 16px;
+      background-color: #fafafa;
+      transition: border-color 0.3s;
+    }
+
+    textarea:focus {
+      border-color: #0984e3;
+      outline: none;
+      background-color: #ffffff;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #00cec9;
+      color: white;
+      padding: 12px 30px;
+      font-size: 17px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .btn:hover {
+      background: #00b894;
+      transform: scale(1.03);
+    }
+
+    .result-box {
+      margin-top: 30px;
+      padding: 25px;
+      background-color: #f1f2f6;
+      border-radius: 12px;
+      border-left: 6px solid #6c5ce7;
+      font-size: 17px;
+      color: #2d3436;
+    }
+
+    .qa-block {
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #dcdde1;
+    }
+
+    .qa-block strong {
+      display: inline-block;
+      width: 60px;
+      color: #0984e3;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>📚 Question Paper Designer</h2>
+
+    <div class="form-group">
+      <label class="form-label" for="question">📝 Question</label>
+      <textarea id="question" placeholder="Type your question here..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="answer">✅ Answer</label>
+      <textarea id="answer" placeholder="Type the answer here..."></textarea>
+    </div>
+
+    <div style="text-align: center;">
+      <button class="btn" onclick="showResult()">Add to Paper</button>
+    </div>
+
+    <div id="result-box" class="result-box">
+      <h3 style="margin-top: 0; color: #6c5ce7;">Generated Q&A:</h3>
+      <!-- Questions will be added here -->
+    </div>
+  </div>
+
+  <script>
+    let questionCount = 0;
+
+    function showResult() {
+      const question = document.getElementById('question').value.trim();
+      const answer = document.getElementById('answer').value.trim();
+      const resultBox = document.getElementById('result-box');
+
+      if (!question || !answer) {
+        alert('⚠ Please enter both a question and an answer.');
+        return;
+      }
+
+      questionCount++;
+
+      const qaBlock = document.createElement('div');
+      qaBlock.className = 'qa-block';
+      qaBlock.innerHTML = `
+        <div><strong>Q${questionCount}:</strong> ${question}</div>
+        <div><strong>A${questionCount}:</strong> ${answer}</div>
+      `;
+
+      resultBox.appendChild(qaBlock);
+
+      document.getElementById('question').value = '';
+      document.getElementById('answer').value = '';
+    }
+  </script>
+
+</body>
+</html>

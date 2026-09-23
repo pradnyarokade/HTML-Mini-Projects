@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MSBTE Marksheet Generator</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #eef2f7; margin: 0; padding: 0; overflow: hidden; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+
+  <div style="width: 90%; max-width: 800px; height: 95vh; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between;">
+
+    
+    <div style="background-color: #fff; padding: 15px; border: 1px solid #ccc; border-radius: 10px;">
+      <h3 style="text-align: center; margin: 5px;">MSBTE Marksheet Generator</h3>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+        <input type="text" id="name" placeholder="Student Name" style="flex: 1 1 48%; padding: 6px;">
+        <input type="text" id="college" placeholder="College Name" style="flex: 1 1 48%; padding: 6px;">
+        <input type="text" id="enroll" placeholder="Enrollment No" style="flex: 1 1 48%; padding: 6px;">
+        <input type="text" id="seat" placeholder="Seat No" style="flex: 1 1 48%; padding: 6px;">
+        <input type="text" id="year" placeholder="Academic Year" style="flex: 1 1 48%; padding: 6px;">
+
+        <input type="number" id="m1" placeholder="JPR" style="flex: 1 1 30%; padding: 6px;">
+        <input type="number" id="m2" placeholder="DCN" style="flex: 1 1 30%; padding: 6px;">
+        <input type="number" id="m3" placeholder="MIC" style="flex: 1 1 30%; padding: 6px;">
+        <input type="number" id="m4" placeholder="EES" style="flex: 1 1 30%; padding: 6px;">
+        <input type="number" id="m5" placeholder="C++" style="flex: 1 1 30%; padding: 6px;">
+      </div>
+
+      <div style="text-align: center; margin-top: 10px;">
+        <button onclick="generateMarksheet()" style="padding: 8px 16px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">Generate Marksheet</button>
+      </div>
+    </div>
+
+  
+    <div id="marksheet" style="display: none; background-color: #fff; margin-top: 10px; padding: 15px; border-radius: 10px; flex-grow: 1; overflow: auto;">
+      <div style="text-align: center;">
+        <img src="logo.png" alt="MSBTE Logo" style="width: 60px;">
+        <h4 style="margin: 5px 0;">MAHARASHTRA STATE BOARD OF TECHNICAL EDUCATION</h4>
+        <p style="margin: 2px 0;">Diploma Examination Marksheet</p>
+      </div>
+
+      <div id="details" style="font-size: 14px; line-height: 1.5;"></div>
+      <p style="text-align: right; font-weight: bold; margin-top: 10px;">Controlled by Examination</p>
+    </div>
+  </div>
+
+  
+  <script>
+    function generateMarksheet() {
+      const name = document.getElementById("name").value;
+      const college = document.getElementById("college").value;
+      const enroll = document.getElementById("enroll").value;
+      const seat = document.getElementById("seat").value;
+      const year = document.getElementById("year").value;
+      const m1 = parseInt(document.getElementById("m1").value) || 0;
+      const m2 = parseInt(document.getElementById("m2").value) || 0;
+      const m3 = parseInt(document.getElementById("m3").value) || 0;
+      const m4 = parseInt(document.getElementById("m4").value) || 0;
+      const m5 = parseInt(document.getElementById("m5").value) || 0;
+
+      const total = m1 + m2 + m3 + m4 + m5;
+      const percentage = total / 5;
+      let grade = "";
+      if (percentage >= 75) grade = "Distinction";
+      else if (percentage >= 60) grade = "First Class";
+      else if (percentage >= 50) grade = "Second Class";
+      else if (percentage >= 40) grade = "Pass";
+      else grade = "Fail";
+
+      document.getElementById("details").innerHTML = `
+        <strong>Name:</strong> ${name}<br>
+        <strong>College:</strong> ${college}<br>
+        <strong>Enrollment No:</strong> ${enroll}<br>
+        <strong>Seat No:</strong> ${seat}<br>
+        <strong>Academic Year:</strong> ${year}<br><br>
+
+        <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+          <tr style="background-color: #f1f1f1;">
+            <th style="border: 1px solid #ccc; padding: 5px;">Subject</th>
+            <th style="border: 1px solid #ccc; padding: 5px;">Marks</th>
+          </tr>
+          <tr><td style="border: 1px solid #ccc; padding: 5px;">JPR</td><td style="border: 1px solid #ccc; padding: 5px;">${m1}</td></tr>
+          <tr><td style="border: 1px solid #ccc; padding: 5px;">DCN</td><td style="border: 1px solid #ccc; padding: 5px;">${m3}</td></tr>
+          <tr><td style="border: 1px solid #ccc; padding: 5px;">MIC</td><td style="border: 1px solid #ccc; padding: 5px;">${m4}</td></tr>
+          <tr><td style="border: 1px solid #ccc; padding: 5px;">EES</td><td style="border: 1px solid #ccc; padding: 5px;">${m5}</td></tr>
+          <tr><td style="border: 1px solid #ccc; padding: 5px;"><strong>Total</strong></td><td style="border: 1px solid #ccc; padding: 5px;"><strong>${total}</strong></td></tr>
+          <tr><td style="border: 1px solid #ccc; padding: 5px;"><strong>Percentage</strong></td><td style="border: 1px solid #ccc; padding: 5px;"><strong>${percentage.toFixed(2)}%</strong></td></tr>
+          <tr><td style="border: 1px solid #ccc; padding: 5px;"><strong>Grade</strong></td><td style="border: 1px solid #ccc; padding: 5px;"><strong>${grade}</strong></td></tr>
+        </table>
+      `;
+
+      document.getElementById("marksheet").style.display = "block";
+    }
+  </script>
+
+</body>
+</html>

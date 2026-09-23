@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mini Bank System</title>
+</head>
+<body style="margin: 0; font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #c3ecf7, #e6e9f0);">
+
+  <div style="max-width: 800px; margin: auto; padding: 40px 20px;">
+
+    <h1 style="text-align:center; color: #003366; margin-bottom: 40px;">💳 Celestia Bank System</h1>
+
+  
+    <div style="background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border-radius: 20px; padding: 30px; margin-bottom: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+      <h2 style="color: #2a2a2a; margin-bottom: 20px;">👤 Open Account</h2>
+
+      <input type="text" id="name" placeholder="Full Name" style="width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 10px;">
+      <input type="text" id="username" placeholder="Username" style="width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 10px;">
+      <input type="password" id="password" placeholder="Password" style="width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 10px;">
+      <input type="text" id="accNum" placeholder="Account Number" style="width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 10px;">
+      <select id="accType" style="width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 10px;">
+        <option value="">-- Select Account Type --</option>
+        <option value="Savings">Savings</option>
+        <option value="Current">Current</option>
+      </select>
+      <input type="password" id="pinCode" placeholder="Set 4-digit PIN" maxlength="4" style="width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 10px;">
+      <input type="file" id="photoInput" accept="image/*" onchange="previewPhoto()" style="width: 100%; margin-bottom: 15px;"><br>
+
+     
+      <input type="text" id="otpInput" placeholder="Enter OTP" style="width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 10px; display: none;">
+      <p id="otpMessage" style="color: red; margin-bottom: 10px;"></p>
+      <button onclick="sendOTP()" type="button" id="otpBtn" style="width: 100%; background-color: #ffaa00; color: white; padding: 12px; font-size: 16px; border: none; border-radius: 10px; cursor: pointer;">Send OTP</button>
+      <button onclick="verifyOTP()" type="button" id="verifyBtn" style="display:none; width: 100%; background-color: #0099cc; color: white; padding: 12px; font-size: 16px; border: none; border-radius: 10px; cursor: pointer;">Verify OTP</button>
+
+      <br><br>
+      <button onclick="openAccount()" style="width: 100%; background-color: #0099cc; color: white; padding: 12px; font-size: 16px; border: none; border-radius: 10px; cursor: pointer;">Open Account</button>
+      <p id="accountOutput" style="margin-top: 15px; color: green;"></p>
+    </div>
+
+   
+    <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: space-between;">
+      <div style="flex: 1; min-width: 280px; background: rgba(255, 255, 255, 0.9); border-radius: 20px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+        <h3 style="color: #006600;">💰 Deposit</h3>
+        <input type="number" id="depositAmt" placeholder="Enter amount" style="width: 100%; padding: 10px; border-radius: 10px; margin-bottom: 10px;">
+        <input type="password" id="depositPin" placeholder="Enter PIN" maxlength="4" style="width: 100%; padding: 10px; border-radius: 10px; margin-bottom: 10px;">
+        <button onclick="depositMoney()" style="width: 100%; background-color: #28a745; color: white; padding: 10px; border: none; border-radius: 10px; cursor: pointer;">Deposit</button>
+        <p id="depositOutput" style="margin-top: 10px;"></p>
+      </div>
+
+     
+      <div style="flex: 1; min-width: 280px; background: rgba(255, 255, 255, 0.9); border-radius: 20px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+        <h3 style="color: #b30000;">🏧 Withdraw</h3>
+        <input type="number" id="withdrawAmt" placeholder="Enter amount" style="width: 100%; padding: 10px; border-radius: 10px; margin-bottom: 10px;">
+        <input type="password" id="withdrawPin" placeholder="Enter PIN" maxlength="4" style="width: 100%; padding: 10px; border-radius: 10px; margin-bottom: 10px;">
+        <button onclick="withdrawMoney()" style="width: 100%; background-color: #dc3545; color: white; padding: 10px; border: none; border-radius: 10px; cursor: pointer;">Withdraw</button>
+        <p id="withdrawOutput" style="margin-top: 10px;"></p>
+      </div>
+    </div>
+
+    
+    <div id="idCard" style="background: rgba(255, 255, 255, 0.95); border-radius: 20px; padding: 30px; margin-top: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); text-align: center;">
+      <h2 style="color: #444;">🆔 Account ID Card</h2>
+      <img id="userPhoto" src="https://via.placeholder.com/100" alt="User Photo" style="width:100px; height:100px; border-radius: 50%; border: 2px solid #ccc; object-fit: cover; margin: 15px 0;"><br>
+      <p><b>Name:</b> <span id="cardName">--</span></p>
+      <p><b>Username:</b> <span id="cardUsername">--</span></p>
+      <p><b>Account Number:</b> <span id="cardAcc">--</span></p>
+      <p><b>Type:</b> <span id="cardType">--</span></p>
+      <p><b>Balance:</b> ₹<span id="cardBalance">0</span></p>
+      <button onclick="printCard()" style="margin-top: 10px; background-color: #333399; color: white; padding: 10px 20px; font-size: 16px; border: none; border-radius: 10px; cursor: pointer;">🖨 Print ID Card</button>
+    </div>
+
+  </div>
+
+  <script>
+    let user = {
+      name: "",
+      username: "",
+      accNum: "",
+      password: "",
+      type: "",
+      pin: "",
+      balance: 0
+    };
+
+    
+    let generatedOTP = "";
+    let otpTimer;
+
+    function sendOTP() {
+      generatedOTP = Math.floor(1000 + Math.random() * 9000); 
+      console.log("OTP:", generatedOTP); 
+
+      document.getElementById("otpInput").style.display = "block";
+      document.getElementById("otpMessage").innerText = "OTP sent. Valid for 30 seconds.";
+      document.getElementById("verifyBtn").style.display = "inline-block";
+      document.getElementById("otpBtn").disabled = true;
+
+      clearTimeout(otpTimer);
+      otpTimer = setTimeout(() => {
+        document.getElementById("otpMessage").innerText = "⏰ OTP expired! Please resend.";
+        document.getElementById("otpBtn").innerText = "Resend OTP";
+        document.getElementById("otpBtn").disabled = false;
+        generatedOTP = "";
+      }, 30000);
+    }
+
+    function verifyOTP() {
+      const enteredOTP = document.getElementById("otpInput").value;
+
+      if (enteredOTP == generatedOTP && generatedOTP !== "") {
+        document.getElementById("otpMessage").innerText = "✅ OTP verified!";
+        document.getElementById("otpBtn").style.display = "none";
+        document.getElementById("verifyBtn").style.display = "none";
+        document.getElementById("otpInput").style.display = "none";
+        generatedOTP = "verified";
+      } else {
+        document.getElementById("otpMessage").innerText = "❌ Invalid or expired OTP!";
+      }
+    }
+
+    function openAccount() {
+      user.name = document.getElementById("name").value;
+      user.username = document.getElementById("username").value;
+      user.password = document.getElementById("password").value;
+      user.accNum = document.getElementById("accNum").value;
+      user.type = document.getElementById("accType").value;
+      user.pin = document.getElementById("pinCode").value;
+
+      if (user.name && user.username && user.password && user.accNum && user.type && user.pin && generatedOTP === "verified") {
+        document.getElementById("accountOutput").innerText = "Account successfully created for " + user.name;
+        document.getElementById("cardName").innerText = user.name;
+        document.getElementById("cardUsername").innerText = user.username;
+        document.getElementById("cardAcc").innerText = user.accNum;
+        document.getElementById("cardType").innerText = user.type;
+
+        // Reset fields
+        document.getElementById("name").value = "";
+        document.getElementById("username").value = "";
+        document.getElementById("password").value = "";
+        document.getElementById("accNum").value = "";
+        document.getElementById("accType").value = "";
+        document.getElementById("pinCode").value = "";
+        document.getElementById("photoInput").value = "";
+        document.getElementById("cardBalance").innerText = user.balance;
+
+      } else if (generatedOTP !== "verified") {
+        document.getElementById("accountOutput").innerText = "Please verify OTP before opening account!";
+      } else {
+        document.getElementById("accountOutput").innerText = "Please fill all the fields including PIN!";
+      }
+    }
+
+    function depositMoney() {
+      let amount = parseFloat(document.getElementById("depositAmt").value);
+      let enteredPin = document.getElementById("depositPin").value;
+
+      if (enteredPin !== user.pin) {
+        document.getElementById("depositOutput").innerText = "Invalid PIN!";
+        return;
+      }
+
+      if (!isNaN(amount) && amount > 0) {
+        user.balance += amount;
+        document.getElementById("depositOutput").innerText = "Deposited ₹" + amount;
+        document.getElementById("cardBalance").innerText = user.balance;
+        document.getElementById("depositAmt").value = "";
+        document.getElementById("depositPin").value = "";
+      } else {
+        document.getElementById("depositOutput").innerText = "Enter a valid amount!";
+      }
+    }
+
+    function withdrawMoney() {
+      let amount = parseFloat(document.getElementById("withdrawAmt").value);
+      let enteredPin = document.getElementById("withdrawPin").value;
+
+      if (enteredPin !== user.pin) {
+        document.getElementById("withdrawOutput").innerText = "Invalid PIN!";
+        return;
+      }
+
+      if (!isNaN(amount) && amount > 0 && amount <= user.balance) {
+        user.balance -= amount;
+        document.getElementById("withdrawOutput").innerText = "Withdrawn ₹" + amount;
+        document.getElementById("cardBalance").innerText = user.balance;
+        document.getElementById("withdrawAmt").value = "";
+        document.getElementById("withdrawPin").value = "";
+      } else {
+        document.getElementById("withdrawOutput").innerText = "Invalid or insufficient balance!";
+      }
+    }
+
+    function previewPhoto() {
+      const file = document.getElementById("photoInput").files[0];
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        document.getElementById("userPhoto").src = e.target.result;
+      };
+      if (file) reader.readAsDataURL(file);
+    }
+
+    function printCard() {
+      const printContents = document.getElementById("idCard").innerHTML;
+      const win = window.open('', '', 'height=600,width=400');
+      win.document.write('<html><head><title>ID Card</title>');
+      win.document.write('<style>body{font-family:Segoe UI,sans-serif;text-align:center;} img{border-radius:50%;border:2px solid #ccc;}</style>');
+      win.document.write('</head><body>');
+      win.document.write(printContents);
+      win.document.write('</body></html>');
+      win.document.close();
+      win.print();
+    }
+  </script>
+
+</body>
+</html>

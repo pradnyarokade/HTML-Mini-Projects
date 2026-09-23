@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student ID Card Generator</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f2f2f2; padding: 20px; margin: 0;">
+
+  <h2 style="text-align: center;">Student ID Card Generator</h2>
+
+  
+  <div style="max-width: 400px; margin: auto; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+    <label>Full Name:</label><br>
+    <input type="text" id="name" style="width: 100%;"><br><br>
+
+    <label>Roll Number:</label><br>
+    <input type="text" id="roll" style="width: 100%;"><br><br>
+
+    <label>Class:</label><br>
+    <input type="text" id="class" style="width: 100%;"><br><br>
+
+    <label>Course:</label><br>
+    <input type="text" id="course" style="width: 100%;"><br><br>
+
+    <label>School/College Name:</label><br>
+    <input type="text" id="school" style="width: 100%;"><br><br>
+
+    <label>Phone Number:</label><br>
+    <input type="text" id="phone" style="width: 100%;"><br><br>
+
+    <label>Upload Student Photo:</label><br>
+    <input type="file" id="photo" accept="image/*" onchange="previewPhoto()" style="width: 100%;"><br><br>
+
+    <button onclick="generateID()" style="padding: 10px; width: 100%; background: #4CAF50; color: white; border: none; border-radius: 5px;">Generate Student ID</button>
+  </div>
+
+  
+  <div id="idCard" style="display: none; max-width: 400px; margin: 30px auto; background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 0 15px rgba(0,0,0,0.1); text-align: center;">
+    <h3 style="margin-top: 0;">STUDENT ID CARD</h3>
+    <img id="cardPhoto" src="" alt="Student Photo" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 2px solid #4CAF50;"><br><br>
+
+    <p><strong>Name:</strong> <span id="cardName"></span></p>
+    <p><strong>Roll No:</strong> <span id="cardRoll"></span></p>
+    <p><strong>Class:</strong> <span id="cardClass"></span></p>
+    <p><strong>Course:</strong> <span id="cardCourse"></span></p>
+    <p><strong>School/College:</strong> <span id="cardSchool"></span></p>
+    <p><strong>Phone:</strong> <span id="cardPhone"></span></p>
+  </div>
+
+  <script>
+    function previewPhoto() {
+      var file = document.getElementById('photo').files[0];
+      var reader = new FileReader();
+      reader.onloadend = function () {
+        document.getElementById('cardPhoto').src = reader.result;
+      }
+      if (file) {
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function generateID() {
+      var name = document.getElementById('name').value;
+      var roll = document.getElementById('roll').value;
+      var className = document.getElementById('class').value;
+      var course = document.getElementById('course').value;
+      var school = document.getElementById('school').value;
+      var phone = document.getElementById('phone').value;
+
+      if (name && roll && className && course && school && phone) {
+        document.getElementById('cardName').innerText = name;
+        document.getElementById('cardRoll').innerText = roll;
+        document.getElementById('cardClass').innerText = className;
+        document.getElementById('cardCourse').innerText = course;
+        document.getElementById('cardSchool').innerText = school;
+        document.getElementById('cardPhone').innerText = phone;
+
+        document.getElementById('idCard').style.display = 'block';
+        document.getElementById('idCard').scrollIntoView({ behavior: 'smooth' });
+      } else {
+        alert("Please fill in all fields and upload the photo.");
+      }
+    }
+  </script>
+
+</body>
+</html>
